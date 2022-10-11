@@ -1,6 +1,113 @@
 body {
-    background-color: white;
-    color: black;
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fefae0;
     font-family: 'Lato', sans-serif;
 }
 
+.container {
+    position: relative;
+    width: 30vw;
+    height: 58vh;
+    min-height: 330px;
+    color: #d4a373;
+    background-color: #fefae0;
+    border: 1px solid #d4a373;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(212, 163, 115, 0.1) 0px 10px 50px;
+}
+
+.container .display-message {
+    position: absolute;
+    top: -50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.container .display-message.green{
+    color: #42855B;
+    border: 1px solid #38E54D;
+    background-color: #E1FFB1;
+}
+
+.container .display-message.red{
+    color: #EB1D36;
+    border: 1px solid #F68989;
+    background-color: #F5EDDC;
+}
+
+.display-message span {
+    font-size: 12px;
+    font-weight: normal;
+    padding: 4px 10px;
+}
+
+.container > button {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    background-color: #d4a373;
+    width: 140px;
+    height: 40px;
+    margin-top: 30px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.login-form {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.login-form input {
+    height: 30px;
+    color: #d4a373;
+    border: 1px solid #d4a373;
+    border-radius: 5px;
+    background-color: #fefae0;
+    outline: none;
+    padding-left: 8px;
+}
+
+.login-form input:focus {
+    border-color: #b3885c;
+}
+
+.email, .password {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.container .name {
+    display: flex;
+    gap: 10px;
+    max-width: 100%;
+}
+
+.container .name > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.container .name input {
+    width: calc(100% - 12px);
+}
