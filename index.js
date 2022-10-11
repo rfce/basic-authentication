@@ -3,16 +3,19 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const express = require('express')
 const mongoose = require('mongoose')
+const cookies = require('cookie-parser')
 const app = express()
 
 dotenv.config()
 
-const authRoute = require('./routes/auth')
-const productsRoute = require('./routes/products')
+const authRoute = require('./routes/api/auth')
+const dashboardRoute = require('./routes/dashboard')
 
 const {logger} = require('./middleware/logger.js')
 
 PORT = process.env.PORT || 3000
+
+app.use(cookies())
 
 app.use(express.urlencoded({ extended: false }))
 
@@ -36,10 +39,18 @@ app.use(cors({
 }))
 
 app.get('/', (req, res) => {
+    const token = req.cookies.token
+
+    // Check if user is already logged in
+    if (token !== undefined) {
+        return res.redirect(307, "/dashboard")
+    }
+    
     res.sendFile(path.join(__dirname, 'views', 'register.html'))
 })
 
 app.use('/api', authRoute)
+app.use('/dashboard', dashboardRoute)
 
 app.all('*', (req, res) => {
     res.status(404).send('Page not found')

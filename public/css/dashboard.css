@@ -1,0 +1,47 @@
+body {
+    margin: 0px;
+    height: 100vh;
+    background-color: #fefae0;
+    font-family: 'Lato', sans-serif;
+}
+
+header {
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+    background-color: #2b2d42;
+}
+
+header > button {
+    all: unset;
+    font-family: 'Lato', sans-serif;
+    margin-right: 20px;
+    color: #2b2d42;
+    background-color: #edf2f4;
+    font-size: 14px;
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+
+.welcome-message {
+    color: #edf2f4;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: default;
+}
+
+.welcome-message > span {
+    font-size: 12px;
+    color: #06d6a0;
+    cursor: pointer;
+}
+
+.welcome-message > span:hover {
+    color: #90e0ef;
+}
+

@@ -25,6 +25,11 @@ registerButton.addEventListener('click', async () => {
     if (result.status == 'success') {
         messageBox.classList.remove('red')
         messageBox.classList.add('green')
+
+        // Redirect user to dashboard
+        setTimeout(() => {
+            window.location = "/dashboard"
+        }, 2000)
     } else {
         messageBox.classList.remove('green')
         messageBox.classList.add('red')
