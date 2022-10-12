@@ -2,10 +2,54 @@ const express = require('express')
 const router = express.Router()
 
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const User = require('../../model/User')
 
-router.get('/login', (req, res) => {
-    res.send('This is login route')
+router.post('/login', async (req, res) => {
+    const prevToken = req.cookies.token
+
+    // Check if user is already logged in
+    if (prevToken !== undefined) {
+        return res.redirect(307, "/dashboard")
+    }
+
+    const user = await User.findOne({ email: req.body.email })
+
+    if (user === null) {
+        return res.json({
+            status: "fail",
+            reason: "Email address not registered"
+        })
+    }
+
+    const hashedPassword = user.password
+
+    const match = await bcrypt.compare(req.body.password, hashedPassword)
+
+    if (match === false) {
+        return res.json({
+            status: "fail",
+            reason: "Incorrect password"
+        })
+    }
+
+    const token = jwt.sign(
+        {
+            email: user.email,
+            role: user.role
+        },
+        process.env.JWT_ACCESS_TOKEN
+    )
+
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true
+    })
+
+    res.json({
+        status: "success",
+        reason: "User login successful",
+    })
 })
 
 router.post('/register', async (req, res) => {
@@ -53,12 +97,14 @@ router.post('/register', async (req, res) => {
             })
         }
 
+        const hashed = await bcrypt.hash(password, 10)
+
         // Save new user to database
         const save = await User.create({
             first_name: firstName,
             last_name: lastName,
             email: email,
-            password: password
+            password: hashed
         })
 
         const token = jwt.sign(

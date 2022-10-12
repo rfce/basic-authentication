@@ -24,6 +24,11 @@ body {
     box-shadow: rgba(212, 163, 115, 0.1) 0px 10px 50px;
 }
 
+.login-container {
+    min-height: unset;
+    height: 50vh;
+}
+
 .container .display-message {
     position: absolute;
     top: -50px;

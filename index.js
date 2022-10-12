@@ -49,6 +49,17 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'register.html'))
 })
 
+app.get('/login', (req, res) => {
+    const token = req.cookies.token
+
+    // Check if user is already logged in
+    if (token !== undefined) {
+        return res.redirect(307, "/dashboard")
+    }
+    
+    res.sendFile(path.join(__dirname, 'views', 'login.html'))
+})
+
 app.use('/api', authRoute)
 app.use('/dashboard', dashboardRoute)
 
