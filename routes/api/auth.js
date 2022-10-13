@@ -4,15 +4,9 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../../model/User')
+const { isLoggedIn, isNotLoggedIn } = require('../../middleware/loginStatus')
 
-router.post('/login', async (req, res) => {
-    const prevToken = req.cookies.token
-
-    // Check if user is already logged in
-    if (prevToken !== undefined) {
-        return res.redirect(307, "/dashboard")
-    }
-
+router.post('/login', isLoggedIn, async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
 
     if (user === null) {
@@ -52,7 +46,7 @@ router.post('/login', async (req, res) => {
     })
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', isLoggedIn, async (req, res) => {
     const { firstName, lastName, email, password } = req.body
 
     if (email && password) {
@@ -133,17 +127,9 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/info', async (req, res) => {
-    const token = req.cookies.token
-
-    if (token === undefined) {
-        return res.json({
-            status: "fail",
-            reason: "No token found. Please login to visit dashboard"
-        })
-    }
-
+router.get('/info', isNotLoggedIn, async (req, res) => {
     let email
+    const token = req.token
 
     jwt.verify(
         token,
@@ -172,16 +158,9 @@ router.get('/info', async (req, res) => {
     })
 })
 
-router.get('/logout', (req, res) => {
-    const token = req.cookies.token
-
-    if (token === undefined) {
-        return res.json({
-            status: "fail",
-            reason: "No token found. Please login to visit dashboard"
-        })
-    }
-
+router.get('/logout', isNotLoggedIn, (req, res) => {
+    const token = req.token
+    
     jwt.verify(
         token,
         process.env.JWT_ACCESS_TOKEN,

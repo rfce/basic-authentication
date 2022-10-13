@@ -12,7 +12,7 @@ body {
 .container {
     position: relative;
     width: 30vw;
-    height: 58vh;
+    height: 62vh;
     min-height: 330px;
     color: #d4a373;
     background-color: #fefae0;
@@ -37,6 +37,15 @@ body {
     align-items: center;
     text-align: center;
     border-radius: 10px;
+}
+
+.container .intent {
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
+.container .intent > a {
+    color: cornflowerblue;
 }
 
 .container .display-message.green{

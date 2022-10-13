@@ -12,6 +12,7 @@ const authRoute = require('./routes/api/auth')
 const dashboardRoute = require('./routes/dashboard')
 
 const {logger} = require('./middleware/logger.js')
+const { isLoggedIn } = require('./middleware/loginStatus')
 
 PORT = process.env.PORT || 3000
 
@@ -38,25 +39,11 @@ app.use(cors({
     optionsSuccessStatus: 200
 }))
 
-app.get('/', (req, res) => {
-    const token = req.cookies.token
-
-    // Check if user is already logged in
-    if (token !== undefined) {
-        return res.redirect(307, "/dashboard")
-    }
-    
+app.get('(^/$)|(/register)', isLoggedIn, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'register.html'))
 })
 
-app.get('/login', (req, res) => {
-    const token = req.cookies.token
-
-    // Check if user is already logged in
-    if (token !== undefined) {
-        return res.redirect(307, "/dashboard")
-    }
-    
+app.get('/login', isLoggedIn, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'))
 })
 
