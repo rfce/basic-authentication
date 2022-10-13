@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(logger)
 
-const whitelist = ['http://localhost:3000', 'undefined']
+const whitelist = ['http://localhost:3000', 'undefined', 'https://basic-authentication.herokuapp.com']
 
 app.use(cors({
     origin: (origin, callback) => {
